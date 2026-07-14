@@ -67,17 +67,21 @@ body{
 }
 
 .danceContainer{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-    padding:30px 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 30px;
 }
 
 .card{
-    background:#fff;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,.12);
+    width: 280px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
 }
 
 .card img{
