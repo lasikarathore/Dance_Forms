@@ -1,18 +1,25 @@
 const API = "https://6a550134e49d9eb2cc557238.mockapi.io/Dance";
 
 
+
+
 const danceContainer = document.getElementById("danceContainer");
 const loader = document.getElementById("loader");
+
 
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 
+
 const addDanceBtn = document.getElementById("addDanceBtn");
+
 
 const formSection = document.getElementById("formSection");
 const danceForm = document.getElementById("danceForm");
 
+
 const formTitle = document.getElementById("formTitle");
+
 
 const nameInput = document.getElementById("name");
 const originInput = document.getElementById("origin");
@@ -21,51 +28,83 @@ const imageInput = document.getElementById("image");
 const descriptionInput = document.getElementById("description");
 const historyInput = document.getElementById("history");
 
+
 const cancelBtn = document.getElementById("cancelBtn");
+
+
+
 
 
 
 let dances = [];
 
 
+let editId = null;
 
 
 
-// 1. data is FETCHed 
+
+
+
+// FETCH DATA
 
 
 fetchDances();
 
 
+
+
 async function fetchDances(){
 
-    try{
 
-        loader.style.display="block";
-
-
-        const response = await fetch(API);
+   try{
 
 
-        dances = await response.json();
+       loader.style.display = "block";
 
 
-        displayDances(dances);
 
 
-        loader.style.display="none";
+       const response = await fetch(API);
 
 
-    }
-    catch(error){
 
-        console.log(error);
 
-        loader.innerHTML="Failed to load data";
+       dances = await response.json();
 
-    }
+
+
+
+       displayDances(dances);
+
+
+
+
+       loader.style.display = "none";
+
+
+   }
+
+
+   catch(error){
+
+
+       console.log(error);
+
+
+       loader.innerHTML = "Failed to load data";
+
+
+   }
+
 
 }
+
+
+
+
+
+
 
 
 
@@ -73,84 +112,150 @@ async function fetchDances(){
 // DISPLAY CARDS
 
 
+
+
 function displayDances(data){
 
 
-    danceContainer.innerHTML="";
 
 
-    data.forEach(dance=>{
-
-
-        danceContainer.innerHTML += `
-
-
-        <div class="card">
-
-
-            <img 
-            src="${dance.image}"
-            alt="${dance.name}"
-            onerror="this.src='https://placehold.co/400x250?text=No+Image'">
-
-
-            <div class="cardcontent">
-
-
-                <h3>${dance.name}</h3>
-
-
-                <p>
-                <b>Origin:</b>
-                ${dance.origin}
-                </p>
-
-
-                <p>
-                <b>Category:</b>
-                ${dance.category}
-                </p>
+   danceContainer.innerHTML = "";
 
 
 
-                <div class="btn-group">
 
-
-                    <button 
-                    class="details-btn"
-                    onclick="viewDetails('${dance.id}')">
-
-                    Details
-
-                    </button>
+   data.forEach(dance => {
 
 
 
-                    <button 
-                    class="delete-btn"
-                    onclick="deleteDance('${dance.id}')">
 
-                    Delete
-
-                    </button>
+       danceContainer.innerHTML += `
 
 
-                </div>
 
 
-            </div>
+       <div class="card">
 
 
-        </div>
 
 
-        `;
+           <img
+           src="${dance.image}"
+           alt="${dance.name}"
+           onerror="this.src='https://placehold.co/400x250?text=No+Image'">
 
 
-    });
+
+
+           <div class="cardcontent">
+
+
+
+
+               <h3>${dance.name}</h3>
+
+
+
+
+               <p>
+               <b>Origin:</b>
+               ${dance.origin}
+               </p>
+
+
+
+
+               <p>
+               <b>Category:</b>
+               ${dance.category}
+               </p>
+
+
+
+
+
+
+               <div class="btn-group">
+
+
+
+
+                   <button
+                   class="details-btn"
+                   onclick="viewDetails('${dance.id}')">
+
+
+                   Details
+
+
+                   </button>
+
+
+
+
+
+
+                   <button
+                   class="edit-btn"
+                   onclick="editDance('${dance.id}')">
+
+
+                   Edit
+
+
+                   </button>
+
+
+
+
+
+
+
+
+                   <button
+                   class="delete-btn"
+                   onclick="deleteDance('${dance.id}')">
+
+
+                   Delete
+
+
+                   </button>
+
+
+
+
+               </div>
+
+
+
+
+           </div>
+
+
+
+
+       </div>
+
+
+
+
+       `;
+
+
+
+
+   });
+
+
 
 
 }
+
+
+
+
+
 
 
 
@@ -160,13 +265,21 @@ function displayDances(data){
 
 // DETAILS PAGE
 
+
+
+
 function viewDetails(id){
 
 
-    window.location.href=`details.html?id=${id}`;
+   window.location.href = `details.html?id=${id}`;
 
 
 }
+
+
+
+
+
 
 
 
@@ -176,29 +289,41 @@ function viewDetails(id){
 
 
 
-searchBtn.addEventListener("click",searchDance);
+
+searchBtn.addEventListener("click", searchDance);
 
 
-searchInput.addEventListener("keyup",searchDance);
+
+
+searchInput.addEventListener("keyup", searchDance);
+
+
+
 
 
 
 function searchDance(){
 
 
-    const value = searchInput.value.toLowerCase();
+
+
+   const value = searchInput.value.toLowerCase();
 
 
 
-    const filteredData = dances.filter(dance=>
+
+   const filteredData = dances.filter(dance =>
 
 
-        dance.name.toLowerCase().includes(value)
+       dance.name.toLowerCase().includes(value)
 
 
-    );
+   );
 
-    displayDances(filteredData);
+
+
+
+   displayDances(filteredData);
 
 
 }
@@ -210,17 +335,38 @@ function searchDance(){
 
 
 
-// OPEN ADD FORM .. 
+
+
+
+
+// OPEN ADD FORM
+
+
+
+
 addDanceBtn.addEventListener("click",()=>{
 
 
-    formSection.style.display="block";
 
 
-    formTitle.innerText="Add Dance";
+   formSection.style.display="block";
 
 
-    danceForm.reset();
+
+
+   formTitle.innerText="Add Dance";
+
+
+
+
+   danceForm.reset();
+
+
+
+
+   editId = null;
+
+
 
 
 });
@@ -232,60 +378,186 @@ addDanceBtn.addEventListener("click",()=>{
 
 
 
-// CREATE DATA
-danceForm.addEventListener("submit",saveDance);
+
+
+
+
+// CREATE/ edit
+
+
+
+
+danceForm.addEventListener("submit", saveDance);
+
+
+
+
+
+
 async function saveDance(event){
 
 
-    event.preventDefault();
+
+
+   event.preventDefault();
 
 
 
-    const dance={
-
-
-        name:nameInput.value.trim(),
-        origin:originInput.value.trim(),
-        category:categoryInput.value.trim(),
-        image:imageInput.value.trim(),
-        description:descriptionInput.value.trim(),
-        history:historyInput.value.trim()
-    };
-
-
-    try{
-        const response = await fetch(API,{
-
-            method:"POST",
-
-            headers:{
-
-                "Content-Type":"application/json" // yeh apan data bhej rahe hain wo Json.. format me hai.
-            },
-            body:JSON.stringify(dance)
-
-
-        });
 
 
 
-        await response.json();
+   const dance = {
 
 
 
-        alert("Dance added successfully");
-        danceForm.reset();
-        formSection.style.display="none";
-        fetchDances();
-    }
+
+       name:nameInput.value.trim(),
 
 
-    catch(error){
-        console.log(error);
-        alert("Something went wrong");
+       origin:originInput.value.trim(),
 
 
-    }
+       category:categoryInput.value.trim(),
+
+
+       image:imageInput.value.trim(),
+
+
+       description:descriptionInput.value.trim(),
+
+
+       history:historyInput.value.trim()
+
+
+   };
+
+
+
+
+
+
+
+
+   try{
+       let url = API;
+
+
+       let method = "POST";  
+
+
+       if(editId){
+           url = `${API}/${editId}`;
+           method = "PUT";
+       }
+
+
+
+
+
+
+       const response = await fetch(url,{
+           method:method,
+           headers:{
+
+
+
+
+               "Content-Type":"application/json"
+
+
+           },
+
+
+
+
+           body:JSON.stringify(dance)
+
+
+
+
+       });
+
+
+       await response.json();
+
+
+
+
+       if(editId){
+
+
+           alert("Dance updated successfully");
+
+
+       }
+
+
+       else{
+
+
+           alert("Dance added successfully");
+
+
+       }
+       danceForm.reset();
+       formSection.style.display="none";
+       editId = null;
+       fetchDances();
+   }
+
+
+
+
+   catch(error){
+       console.log(error);
+       alert("Something went wrong");
+   }
+
+
+
+
+}
+
+
+
+
+// EDIT DATA
+
+
+
+
+function editDance(id){
+
+
+
+
+   const dance = dances.find(
+
+
+       dance => dance.id == id
+
+
+   );
+   if(!dance){
+
+
+       return;
+
+
+   }
+   editId = id;
+
+
+   formSection.style.display="block";
+   formTitle.innerText="Edit Dance";
+   nameInput.value = dance.name;
+   originInput.value = dance.origin;
+
+
+   categoryInput.value = dance.category;
+   imageInput.value = dance.image;
+   descriptionInput.value = dance.description;
+   historyInput.value = dance.history;
 }
 
 
@@ -293,53 +565,37 @@ async function saveDance(event){
 
 
 
+// delete -
 
 
 
-// DELETE DATA
+
 async function deleteDance(id){
+   const confirmDelete = confirm(
+       "Are you sure you want to delete?"
+   );
 
 
-    const confirmDelete = confirm(
-        "Are you sure you want to delete?"
-    );
+   if(!confirmDelete){
+       return;
+   }
 
 
-    if(!confirmDelete){
-
-        return;
-
-    }
-
-
-
-    try{
-
-
-        await fetch(`${API}/${id}`,{
-
-            method:"DELETE"
-
-        });
-
-
-
-        alert("Deleted successfully");
-
-
-        fetchDances();
-
-
-    }
-
-
-    catch(error){
-
-
-        console.log(error);
-
-
-    }
+   try{
+       const response = await fetch(`${API}/${id}`,{
+           method:"DELETE"
+       });
+       if(response.ok){
+           alert("Deleted successfully");
+           fetchDances();
+       }
+       else{
+           alert("Delete failed");
+       }
+   }
+   catch(error){
+       console.log(error);
+   }
 
 
 }
@@ -347,33 +603,25 @@ async function deleteDance(id){
 
 
 
-
-
-
-
-// CANCEL FORM
+// cancel
 cancelBtn.addEventListener("click",()=>{
-    danceForm.reset();
-    formSection.style.display="none";
+   danceForm.reset();
+   formSection.style.display="none";
+   editId = null;
 });
 
 
 
 
-
-
-
-
-// HIDE FORM INITIALLY
+// HIDE FORM (as we will hide form initially..)
 formSection.style.display="none";
 
 
 
 
+//global funct.
 
 
-
-// GLOBAL FUNCTIONS
-window.viewDetails=viewDetails;
-
-window.deleteDance=deleteDance;
+window.viewDetails = viewDetails;
+window.editDance = editDance;
+window.deleteDance = deleteDance;
