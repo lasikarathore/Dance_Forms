@@ -2,24 +2,29 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dance Forms...</title>
+    <title>Dance Forms</title>
 
     <link rel="stylesheet" href="../CSS/style.css">
+
 </head>
 
 <body>
 
-  
     <header>
+
         <nav class="navbar">
 
             <h1 class="logo">
-                 Dance Forms
+                Dance Forms
             </h1>
+
         </nav>
+
     </header>
 
 
@@ -29,42 +34,108 @@
             Explore World Dance Forms
         </h2>
 
-        
-
     </section>
 
 
-   
     <section class="search">
 
-        <input 
-            type="text" 
+        <input
+            type="text"
             id="searchInput"
-            placeholder="Search dance form..."
-        >
+            placeholder="Search dance form...">
 
         <button id="searchBtn">
             Search
         </button>
 
+        <button id="addDanceBtn">
+            Add Dance
+        </button>
+
     </section>
 
 
-   
+
+    <!-- Add / Edit Form -->
+
+    <section id="formSection" class="formSection">
+
+        <h2 id="formTitle">
+            Add Dance
+        </h2>
+
+        <form id="danceForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Dance Name"
+                required>
+
+            <input
+                type="text"
+                id="origin"
+                placeholder="Origin"
+                required>
+
+            <input
+                type="text"
+                id="category"
+                placeholder="Category"
+                required>
+
+            <input
+                type="text"
+                id="image"
+                placeholder="Image URL"
+                required>
+
+            <textarea
+                id="description"
+                placeholder="Description"
+                required></textarea>
+
+            <textarea
+                id="history"
+                placeholder="History"
+                required></textarea>
+
+            <button type="submit" id="saveBtn">
+                Save
+            </button>
+
+            <button
+                type="button"
+                id="cancelBtn">
+                Cancel
+            </button>
+
+        </form>
+
+    </section>
+
+
+
     <div id="loader">
+
         Loading...
+
     </div>
 
 
-   
+
     <section>
 
-        <div id="danceContainer" class="danceContainer">
+        <div
+            id="danceContainer"
+            class="danceContainer">
 
         </div>
 
     </section>
+
     <script src="../JS/scripts.js"></script>
+    
 
 </body>
 
